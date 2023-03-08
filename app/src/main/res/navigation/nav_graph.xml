@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="br.com.impacta.curso.myapplication.ui.fragments.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_listFragment_to_addEditRemoveFragment"
+            app:destination="@id/addEditRemoveFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addEditRemoveFragment"
+        android:name="br.com.impacta.curso.myapplication.ui.fragments.AddEditRemoveFragment"
+        android:label="fragment_add_edit_remove"
+        tools:layout="@layout/fragment_add_edit_remove" >
+        <argument
+            android:name="uid"
+            app:argType="integer" />
+    </fragment>
+</navigation>
