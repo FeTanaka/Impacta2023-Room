@@ -60,7 +60,9 @@ class AddEditRemoveFragment : Fragment() {
             binding.saveButton.text = "Salvar"
 
             binding.saveButton.setOnClickListener{
-                val contato = Contato(nome = binding.nameEditText.text.toString(), telefone = binding.telephoneEditText.text.toString())
+                val contato = Contato(
+                    nome = binding.nameEditText.text.toString(),
+                    telefone = binding.telephoneEditText.text.toString())
                 viewModel.salvar(contato)
             }
         }

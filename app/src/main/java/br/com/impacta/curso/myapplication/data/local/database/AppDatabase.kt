@@ -6,6 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import br.com.impacta.curso.myapplication.data.local.daos.ContatoDao
 import br.com.impacta.curso.myapplication.data.models.Contato
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Database(entities = [Contato::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
@@ -30,8 +34,11 @@ abstract class AppDatabase: RoomDatabase() {
         }
 
         private fun cargaInicial() {
-            INSTANCE?.contatoDao()?.inserir(Contato(1, "Fernando", "011xxxxxx"))
-            INSTANCE?.contatoDao()?.inserir(Contato(2, "Fernando 2", "011xxxxxx"))
+            val scope = CoroutineScope(Dispatchers.IO)
+            scope.launch {
+                INSTANCE?.contatoDao()?.inserir(Contato(1, "Fernando", "011xxxxxx"))
+                INSTANCE?.contatoDao()?.inserir(Contato(2, "Fernando 2", "011xxxxxx"))
+            }
         }
     }
 }

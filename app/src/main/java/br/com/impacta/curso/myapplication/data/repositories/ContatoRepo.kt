@@ -7,23 +7,23 @@ class ContatoRepo(private val db: AppDatabase) {
 
     private val dao = db.contatoDao()
 
-    fun inserir(contato: Contato) {
+    suspend fun inserir(contato: Contato) {
         dao.inserir(contato)
     }
 
-    fun atualizar(contato: Contato) {
+    suspend fun atualizar(contato: Contato) {
         dao.atualizar(contato)
     }
 
-    fun deletar(contato: Contato) {
+    suspend fun deletar(contato: Contato) {
         dao.deletar(contato)
     }
 
-    fun buscarPorId(id: Int): Contato {
+    suspend fun buscarPorId(id: Int): Contato {
         return dao.buscarPorId(id)
     }
 
-    fun buscarTodos(): List<Contato> {
+    suspend fun buscarTodos(): List<Contato> {
         return dao.buscarTodos()
     }
 

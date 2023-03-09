@@ -1,12 +1,11 @@
 package br.com.impacta.curso.myapplication.ui.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import br.com.impacta.curso.myapplication.data.local.database.AppDatabase
 import br.com.impacta.curso.myapplication.data.models.Contato
 import br.com.impacta.curso.myapplication.data.repositories.ContatoRepo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MeuViewModel(private val db: AppDatabase): ViewModel() {
 
@@ -19,28 +18,38 @@ class MeuViewModel(private val db: AppDatabase): ViewModel() {
     val contato: LiveData<Contato?> = _contato
 
     fun buscarListaContatos() {
-        val lista = contatoRepo.buscarTodos()
-        _listaContatos.value = lista
+        viewModelScope.launch(Dispatchers.IO) {
+            val lista = contatoRepo.buscarTodos()
+            _listaContatos.postValue(lista)
+        }
     }
 
     fun buscarPorId(id: Int) {
-        val contato = contatoRepo.buscarPorId(id)
-        _contato.value = contato
+        viewModelScope.launch(Dispatchers.IO) {
+            val contato = contatoRepo.buscarPorId(id)
+            _contato.postValue(contato)
+        }
     }
 
     fun salvar(contato: Contato) {
-        contatoRepo.inserir(contato)
-        _contato.value = contato
+        viewModelScope.launch(Dispatchers.IO) {
+            contatoRepo.inserir(contato)
+            _contato.postValue(contato)
+        }
     }
 
     fun atualizar(contato: Contato) {
-        contatoRepo.atualizar(contato)
-        _contato.value = contato
+        viewModelScope.launch(Dispatchers.IO) {
+            contatoRepo.atualizar(contato)
+            _contato.postValue(contato)
+        }
     }
 
     fun deletar(contato: Contato) {
-        contatoRepo.deletar(contato)
-        _contato.value = null
+        viewModelScope.launch(Dispatchers.IO) {
+            contatoRepo.deletar(contato)
+            _contato.postValue(null)
+        }
     }
 }
 
