@@ -6,6 +6,7 @@ import br.com.impacta.curso.myapplication.data.models.Contato
 import br.com.impacta.curso.myapplication.data.repositories.ContatoRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MeuViewModel(private val db: AppDatabase): ViewModel() {
 
@@ -27,7 +28,9 @@ class MeuViewModel(private val db: AppDatabase): ViewModel() {
     fun buscarPorId(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             val contato = contatoRepo.buscarPorId(id)
-            _contato.postValue(contato)
+            withContext(Dispatchers.Main) {
+                _contato.value = contato
+            }
         }
     }
 

@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.impacta.curso.myapplication.data.models.Contato
 import br.com.impacta.curso.myapplication.databinding.ContatoItemBinding
 
-class ContatoAdaptador(private val lista: List<Contato>): RecyclerView.Adapter<ContatoAdaptador.ContatoViewHolder>() {
+class ContatoAdaptador(
+    private val lista: List<Contato>,
+    private val action: (Int) -> Unit
+): RecyclerView.Adapter<ContatoAdaptador.ContatoViewHolder>() {
 
-    inner class ContatoViewHolder(private val binding: ContatoItemBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ContatoViewHolder(val binding: ContatoItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(contato: Contato) {
             binding.contato = contato
         }
@@ -22,6 +25,9 @@ class ContatoAdaptador(private val lista: List<Contato>): RecyclerView.Adapter<C
 
     override fun onBindViewHolder(holder: ContatoViewHolder, position: Int) {
         holder.bind(lista[position])
+        holder.binding.root.setOnClickListener{
+            action(lista[position].id)
+        }
     }
 
     override fun getItemCount(): Int = lista.size

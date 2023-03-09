@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.impacta.curso.myapplication.R
 import br.com.impacta.curso.myapplication.data.local.database.AppDatabase
@@ -37,8 +38,13 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val action = {id: Int ->
+            val direction = ListFragmentDirections.actionListFragmentToAddEditRemoveFragment(id)
+            findNavController().navigate(direction)
+        }
+
         viewModel.listaContatos.observe(viewLifecycleOwner) { lista ->
-            binding.recyclerView.adapter = ContatoAdaptador(lista)
+            binding.recyclerView.adapter = ContatoAdaptador(lista, action)
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         }
 
